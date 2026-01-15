@@ -2,10 +2,26 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MensajeController;
+use App\Http\Controllers\controlador_alumno;
 
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Ruta para crear un nuevo alumno
+// Añado el factor protegido con el auth 
+
+Route::middleware(['auth'
+])->group(function () {
+
+Route::get('admin/alumno/create', [controlador_alumno::class, 'create'])->name('admin.alumno.create');
+
+// Guardar alumno
+
+Route::post('admin/alumno/store', [controlador_alumno::class, 'store'])->name('admin.alumno.store');
+
+});
+
 
 // Ruta que muestra el formulario para crear un nuevo mensaje
 Route::get('/mensaje', [MensajeController::class, 'create'])->name('mensaje.create');
